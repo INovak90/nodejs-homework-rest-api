@@ -57,11 +57,13 @@ const getCurrent = async (req, res) => {
 };
 
 const updateSubscription = async (req, res) => {
-  const { _id } = req.user;
-  const result = await User.findByIdAndUpdate(_id, req.body, { new: true });
-  if (!result) {
-    throw HttpError(404, `Contact with ${_id} not found`);
+  const { _id: id } = req.user;
+  const { subscription } = req.body;
+  const user = await User.findById(id);
+  if (user.subscription === subscription) {
+    throw HttpError(409, "The current and new account status are the same");
   }
+  const result = await User.findByIdAndUpdate(id, { subscription }, { new: true });
   res.json(result);
 };
 

@@ -32,11 +32,13 @@ const addPostSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().pattern(emailRegexp).required(),
   phone: Joi.number().required(),
+  favorite: Joi.boolean(),
 });
 const addPutSchema = Joi.object({
   name: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
   phone: Joi.number(),
+  favorite: Joi.boolean(),
 }).min(1);
 
 const updateFavoriteSchema = Joi.object({
